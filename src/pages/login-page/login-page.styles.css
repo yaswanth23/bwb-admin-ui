@@ -1,0 +1,81 @@
+.login-page-container {
+  min-height: 100vh;
+}
+.lp-logo-container {
+  padding: 2rem 4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.lp-logo-container a {
+  text-decoration: none;
+}
+.lp-logo {
+  font-family: var(--main-font);
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  color: var(--primary-color);
+  line-height: 2.8rem;
+}
+.lp-sub-logo-name {
+  font-family: var(--main-font-bold);
+  font-size: 1.5rem;
+}
+.lp-form-sub-container {
+  width: 21rem;
+}
+.lp-form-header,
+.lp-form-sub-text,
+.lp-form-mobile-label,
+.lp-form-password-label {
+  color: var(--primary-color);
+}
+.lp-form-main {
+  margin-top: 1.5rem;
+}
+.lp-form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 6rem;
+}
+.lp-form-mobile-label,
+.lp-form-password-label {
+  font-weight: bold;
+  padding-bottom: 0.5rem;
+}
+.lp-form-password-inp {
+  margin: 1.5rem 0 0.5rem 0;
+}
+.lp-form-input-field {
+  border-color: var(--primary-color);
+  font-family: var(--main-font);
+  border-style: solid;
+  border-radius: 10px;
+  padding: 0.5rem;
+  caret-color: var(--primary-color);
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  line-height: 2rem;
+  background-color: var(--color-white);
+}
+.lp-form-error-message {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: var(--error-color);
+}
+.lp-form-submit-button {
+  margin-top: 1.4rem;
+  border: none;
+  width: 100%;
+  height: 3.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  background: var(--primary-color);
+  color: var(--color-white);
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
