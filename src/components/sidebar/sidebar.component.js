@@ -6,15 +6,15 @@ import budget_b from "../../assets/icons/budget-blue.svg";
 import budget_w from "../../assets/icons/budget-white.svg";
 import home_b from "../../assets/icons/home-blue.svg";
 import home_w from "../../assets/icons/home-white.svg";
-import plane_b from "../../assets/icons/plane-blue.svg";
-import plane_w from "../../assets/icons/plane-white.svg";
+// import plane_b from "../../assets/icons/plane-blue.svg";
+// import plane_w from "../../assets/icons/plane-white.svg";
 
 const Sidebar = () => {
   const location = useLocation();
   const [activeLinkIdx, setActiveLinkIdx] = useState(1);
 
   useEffect(() => {
-    if (location.pathname === "/all-diagnostics") {
+    if (location.pathname === "/all-bookings") {
       setActiveLinkIdx(2);
     }
     //  else if (location.pathname === "/my-bookings") {
@@ -54,7 +54,7 @@ const Sidebar = () => {
             </li>
             <li className="sb-nav-item">
               <Link
-                to="/all-diagnostics"
+                to="/all-bookings"
                 onClick={() => setActiveLinkIdx(2)}
                 className={`sb-nav-link ${
                   2 === activeLinkIdx ? "active" : null
@@ -65,7 +65,7 @@ const Sidebar = () => {
                   className="sb-nav-link-icon"
                   alt="book-diagnostics-icon"
                 />
-                <span className="sb-nav-link-text">All Diagnostics</span>
+                <span className="sb-nav-link-text">All Bookings</span>
               </Link>
             </li>
             {/* <li className="sb-nav-item">

@@ -18,7 +18,7 @@ const LoginPage = () => {
   const handleVerifyLogin = async (event) => {
     event.preventDefault();
 
-    const apiEndpoint = apiUrl;
+    const apiEndpoint = apiUrl + "/admin/user/login";
     const requestData = {
       mobileNumber: mobileNumber,
       password: password,
