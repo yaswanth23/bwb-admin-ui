@@ -59,6 +59,12 @@
 .all-bookings-table-main td:nth-child(4) {
   text-align: right;
 }
+.all-bookings-table-main td:nth-child(1) {
+  cursor: pointer;
+  &:hover {
+    font-weight: 600;
+  }
+}
 .even-row {
   background-color: #fbfbfb;
 }
@@ -67,4 +73,116 @@
 }
 .all-bookings-price-symbol {
   font-size: 1.2rem;
+}
+.all-booking-modal-container {
+  width: 50rem;
+  padding: 1rem;
+}
+.all-booking-modal-header-main {
+  display: flex;
+  justify-content: space-between;
+}
+.all-booking-modal-header-main span {
+  font-size: 0.9rem;
+}
+.all-booking-modal-cancel-icon {
+  font-size: 1.7rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.all-booking-stepper-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.all-booking-stepper-section {
+  margin: 2rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0 1rem;
+}
+.step-item p {
+  padding-top: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--primary-color);
+}
+.step-item:not(:first-child):before {
+  content: "";
+  background-color: #ccc;
+  position: absolute;
+  width: 40%;
+  height: 3px;
+  right: 28%;
+  top: 25%;
+}
+.step {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  position: relative;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--color-preload-text);
+}
+.active .step {
+  background-color: #3498db;
+}
+.complete .step {
+  background-color: #27ae60;
+}
+.complete:not(:first-child):before,
+.active:not(:first-child):before {
+  background-color: #27ae60;
+}
+.tick-icon {
+  font-size: 1.2rem;
+  color: var(--color-white);
+}
+.all-booking-modal-body-container {
+  margin-top: 1rem;
+}
+.all-booking-md-note-section {
+  background-color: var(--color-preload-text);
+  padding: 0.5rem;
+}
+.all-booking-md-note-section p {
+  font-size: 0.8rem;
+  color: var(--primary-color);
+}
+.all-booking-button-container {
+  margin-top: 1rem;
+}
+.all-booking-btn {
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 0.3rem;
+  height: 2rem;
+  color: var(--color-preload-text);
+  background: var(--primary-color);
+  font-family: var(--main-font);
 }

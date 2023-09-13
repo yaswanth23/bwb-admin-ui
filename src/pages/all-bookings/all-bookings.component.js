@@ -1,4 +1,7 @@
-import { memo, useState, useEffect } from "react";
+import { memo, useState, useEffect, useCallback } from "react";
+import Modal from "react-modal";
+import { TiTick } from "react-icons/ti";
+import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import "./all-bookings.styles.css";
 
@@ -11,6 +14,12 @@ const AllBookingsPage = () => {
   const [metaData, setMetaData] = useState({});
   const [pageNumber, setPageNumber] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [bookingDetails, setBookingDetails] = useState({});
+  const [bookingStates, setBookingStates] = useState([]);
+  const [bookingId, setBookingId] = useState(null);
+  const [buttonLabel, setButtonLabel] = useState("complete sample picked up");
+
   const startBookingIndex = (pageNumber - 1) * limit + 1;
   const endBookingIndex =
     diagnosticBookings.length > 0
@@ -20,6 +29,22 @@ const AllBookingsPage = () => {
   useEffect(() => {
     fetchDiagnosticBookings();
   }, [pageNumber]);
+
+  useEffect(() => {
+    if (bookingStates.length > 0) {
+      bookingStates.map((item) => {
+        if (item.stateId === 5 && !item.isActive) {
+          setButtonLabel("complete sample picked up");
+        } else if (item.stateId === 5 && item.isActive) {
+          setButtonLabel("complete report generated");
+        }
+
+        if (item.stateId === 6 && item.isActive) {
+          setButtonLabel("upload reports");
+        }
+      });
+    }
+  }, [bookingStates]);
 
   const fetchDiagnosticBookings = () => {
     const apiEndpoint =
@@ -62,6 +87,73 @@ const AllBookingsPage = () => {
     });
   };
 
+  const openModal = (bookingId) => {
+    setBookingId(bookingId);
+    fetchBookingDetails(bookingId);
+    setModalIsOpen(true);
+  };
+
+  const fetchBookingDetails = (bookingId) => {
+    const apiEndpoint =
+      apiUrl + `/details/diagnostics/bookings/${userData.userId}/${bookingId}`;
+    fetch(apiEndpoint, {
+      method: "GET",
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzUxMiJ9.eyJzZWNyZXQiOiJiZmE3MzhhNjdkOGU5NGNmNDI4ZTdjZWE5Y2E1YzY3YiJ9.o4k544e1-NWMTBT28lOmEJe_D4TMOuwb11_rXLWb_SNhd6Oq70lWWqVdHzenEr1mhnVTDAtcOufnc4CMlIxUiw",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setBookingDetails(data.data.bookingDetails[0]);
+        setBookingStates(data.data.bookingDetails[0].bookingStates);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleBookingStateUpdate = () => {
+    const apiEndpoint = apiUrl + "/update/booking/status";
+    let stateId = buttonLabel == "complete sample picked up" ? 5 : 6;
+    const requestData = {
+      userId: userData.userId,
+      bookingId: bookingDetails._id,
+      stateId: stateId,
+    };
+    fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzUxMiJ9.eyJzZWNyZXQiOiJiZmE3MzhhNjdkOGU5NGNmNDI4ZTdjZWE5Y2E1YzY3YiJ9.o4k544e1-NWMTBT28lOmEJe_D4TMOuwb11_rXLWb_SNhd6Oq70lWWqVdHzenEr1mhnVTDAtcOufnc4CMlIxUiw",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        fetchBookingDetails(bookingId);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <>
       <div className="all-bookings-container">
@@ -86,7 +178,13 @@ const AllBookingsPage = () => {
                       key={index}
                       className={index % 2 === 0 ? "even-row" : "odd-row"}
                     >
-                      <td>{item._id}</td>
+                      <td
+                        onClick={() => {
+                          openModal(item._id);
+                        }}
+                      >
+                        {item._id}
+                      </td>
                       <td>{formatCreatedOn(item.createdOn)}</td>
                       <td>
                         <span className="all-bookings-price-symbol">
@@ -124,6 +222,92 @@ const AllBookingsPage = () => {
           <div>No Bookings</div>
         )}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        preventScroll={true}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+          },
+          content: {
+            padding: 0,
+            border: "none",
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+          },
+        }}
+        ariaHideApp={false}
+      >
+        <div className="all-booking-modal-container">
+          {bookingDetails && (
+            <>
+              <div className="all-booking-modal-header-main">
+                <span>Booking Id: {bookingDetails._id}</span>
+                <RxCross2
+                  className="all-booking-modal-cancel-icon"
+                  onClick={closeModal}
+                />
+              </div>
+              <div className="all-booking-stepper-container">
+                <div className="all-booking-stepper-section">
+                  {bookingStates.length > 0 && (
+                    <>
+                      {bookingStates.map((step, index) => (
+                        <div
+                          key={step.stateId}
+                          className={
+                            step.isActive ? "step-item complete" : "step-item"
+                          }
+                        >
+                          <div className="step">
+                            {step.isActive ? (
+                              <TiTick className="tick-icon" />
+                            ) : (
+                              index + 1
+                            )}
+                          </div>
+                          <p>{step.stateName}</p>
+                        </div>
+                      ))}
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="all-booking-modal-body-container">
+                <div className="all-booking-md-note-section">
+                  <p>
+                    1. Click on "Complete sample picked up" button once you
+                    successfully collect the sample.
+                  </p>
+                  <p>
+                    2. Click on "Complete report generated" button once the
+                    reports are generated. Upload reports here once it is
+                    available.
+                  </p>
+                  <p>3. In case of assistance contact customer service.</p>
+                </div>
+                <div className="all-booking-button-container">
+                  {buttonLabel == "upload reports" ? (
+                    <button className="all-booking-btn">{buttonLabel}</button>
+                  ) : (
+                    <button
+                      className="all-booking-btn"
+                      onClick={handleBookingStateUpdate}
+                    >
+                      {buttonLabel}
+                    </button>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </Modal>
     </>
   );
 };
