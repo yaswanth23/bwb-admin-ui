@@ -3,6 +3,7 @@ import Modal from "react-modal";
 import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
+import { useDropzone } from "react-dropzone";
 import "./all-bookings.styles.css";
 
 import { selectUserData } from "../../store/user/user.selector";
@@ -19,6 +20,8 @@ const AllBookingsPage = () => {
   const [bookingStates, setBookingStates] = useState([]);
   const [bookingId, setBookingId] = useState(null);
   const [buttonLabel, setButtonLabel] = useState("complete sample picked up");
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  console.log(bookingDetails);
 
   const startBookingIndex = (pageNumber - 1) * limit + 1;
   const endBookingIndex =
@@ -148,6 +151,70 @@ const AllBookingsPage = () => {
       })
       .then((data) => {
         fetchBookingDetails(bookingId);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const onDrop = useCallback(
+    async (acceptedFiles) => {
+      const formData = new FormData();
+      acceptedFiles.forEach((file) => {
+        formData.append("files", file);
+      });
+
+      try {
+        const apiEndpoint = apiUrl + "/upload/reports";
+        const response = await fetch(apiEndpoint, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log(responseData);
+          setUploadedFiles([...uploadedFiles, ...responseData.data]);
+          setButtonLabel("submit");
+        } else {
+          console.error("File upload failed");
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+      }
+    },
+    [uploadedFiles]
+  );
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+
+  const handleFileRemoval = async (fileKey) => {
+    setUploadedFiles(uploadedFiles.filter((file) => file.url !== fileKey));
+  };
+
+  const handleSubmitReports = () => {
+    const apiEndpoint = apiUrl + "/submit/reports";
+
+    const requestData = {
+      bookingId: bookingDetails._id,
+      fileUrls: uploadedFiles,
+    };
+    fetch(apiEndpoint, {
+      method: "POST",
+      headers: {
+        Authorization:
+          "eyJhbGciOiJIUzUxMiJ9.eyJzZWNyZXQiOiJiZmE3MzhhNjdkOGU5NGNmNDI4ZTdjZWE5Y2E1YzY3YiJ9.o4k544e1-NWMTBT28lOmEJe_D4TMOuwb11_rXLWb_SNhd6Oq70lWWqVdHzenEr1mhnVTDAtcOufnc4CMlIxUiw",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setUploadedFiles([]);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -292,8 +359,50 @@ const AllBookingsPage = () => {
                   <p>3. In case of assistance contact customer service.</p>
                 </div>
                 <div className="all-booking-button-container">
-                  {buttonLabel == "upload reports" ? (
-                    <button className="all-booking-btn">{buttonLabel}</button>
+                  {buttonLabel == "upload reports" ||
+                  buttonLabel == "submit" ? (
+                    <>
+                      <div>
+                        <div {...getRootProps()} className="file-uploader">
+                          <input {...getInputProps()} />
+                          <p>
+                            Drag & drop some files here, or click to select
+                            files
+                          </p>
+                        </div>
+                        <div className="file-list">
+                          <h2>Uploaded Files:</h2>
+                          <ul>
+                            {uploadedFiles?.map((file) => (
+                              <li key={file.url}>
+                                {file.url}
+                                <button
+                                  onClick={() => handleFileRemoval(file.url)}
+                                >
+                                  Remove
+                                </button>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div>
+                          {bookingDetails.reports.length} files has been
+                          uploaded!
+                        </div>
+                      </div>
+                      {buttonLabel == "submit" ? (
+                        <button
+                          className="all-booking-btn"
+                          onClick={handleSubmitReports}
+                        >
+                          {buttonLabel}
+                        </button>
+                      ) : (
+                        <button className="all-booking-btn">
+                          {buttonLabel}
+                        </button>
+                      )}
+                    </>
                   ) : (
                     <button
                       className="all-booking-btn"

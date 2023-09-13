@@ -117,15 +117,15 @@
   text-align: center;
   color: var(--primary-color);
 }
-.step-item:not(:first-child):before {
+/* .step-item:not(:first-child):before {
   content: "";
   background-color: #ccc;
   position: absolute;
   width: 40%;
   height: 3px;
   right: 28%;
-  top: 25%;
-}
+  top: 19%;
+} */
 .step {
   width: 30px;
   height: 30px;
@@ -185,4 +185,61 @@
   color: var(--color-preload-text);
   background: var(--primary-color);
   font-family: var(--main-font);
+}
+/* App.css or your custom CSS file */
+
+/* Styles for the file uploader container */
+.file-uploader {
+  border: 2px dashed var(--color-preload-text);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.file-uploader p {
+  font-size: 0.9rem;
+  color: var(--primary-color);
+}
+/* Styles for the uploaded file list */
+.file-list {
+  margin-top: 1rem;
+}
+.file-list h2 {
+  font-size: 0.9rem;
+}
+/* Styles for each uploaded file item */
+.file-list ul {
+  list-style-type: none;
+  padding-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.file-list li button {
+  margin-left: 0.5rem;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 0.1rem;
+  border-radius: 0.2rem;
+  cursor: pointer;
+}
+
+/* Center the "Remove" button text */
+.file-list li button:focus {
+  outline: none;
+}
+
+/* Hover effect for the "Remove" button */
+.file-list li button:hover {
+  background-color: #d32f2f;
 }
