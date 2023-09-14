@@ -371,7 +371,13 @@ const AllBookingsPage = () => {
                           </p>
                         </div>
                         <div className="file-list">
-                          <h2>Uploaded Files:</h2>
+                          <h2>
+                            Uploaded Files:{" "}
+                            <span>
+                              {bookingDetails.reports.length} files has been
+                              uploaded!
+                            </span>
+                          </h2>
                           <ul>
                             {uploadedFiles?.map((file) => (
                               <li key={file.url}>
@@ -384,10 +390,6 @@ const AllBookingsPage = () => {
                               </li>
                             ))}
                           </ul>
-                        </div>
-                        <div>
-                          {bookingDetails.reports.length} files has been
-                          uploaded!
                         </div>
                       </div>
                       {buttonLabel == "submit" ? (
