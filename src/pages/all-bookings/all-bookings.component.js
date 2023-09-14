@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useCallback } from "react";
+import axios from "axios";
 import Modal from "react-modal";
 import { TiTick } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
@@ -158,20 +159,26 @@ const AllBookingsPage = () => {
 
   const onDrop = useCallback(
     async (acceptedFiles) => {
-      const formData = new FormData();
-      acceptedFiles.forEach((file) => {
-        formData.append("files", file);
-      });
-
       try {
-        const apiEndpoint = apiUrl + "/upload/reports";
-        const response = await fetch(apiEndpoint, {
-          method: "POST",
-          body: formData,
+        const formData = new FormData();
+        acceptedFiles.forEach((file) => {
+          formData.append("files", file);
         });
 
-        if (response.ok) {
-          const responseData = await response.json();
+        const response = await axios.post(
+          `${apiUrl}/upload/reports`,
+          formData,
+          {
+            headers: {
+              Authorization:
+                "eyJhbGciOiJIUzUxMiJ9.eyJzZWNyZXQiOiJiZmE3MzhhNjdkOGU5NGNmNDI4ZTdjZWE5Y2E1YzY3YiJ9.o4k544e1-NWMTBT28lOmEJe_D4TMOuwb11_rXLWb_SNhd6Oq70lWWqVdHzenEr1mhnVTDAtcOufnc4CMlIxUiw",
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          const responseData = response.data;
           console.log(responseData);
           setUploadedFiles([...uploadedFiles, ...responseData.data]);
           setButtonLabel("submit");
