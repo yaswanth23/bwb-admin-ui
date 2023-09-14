@@ -21,7 +21,6 @@ const AllBookingsPage = () => {
   const [bookingId, setBookingId] = useState(null);
   const [buttonLabel, setButtonLabel] = useState("complete sample picked up");
   const [uploadedFiles, setUploadedFiles] = useState([]);
-  console.log(bookingDetails);
 
   const startBookingIndex = (pageNumber - 1) * limit + 1;
   const endBookingIndex =
@@ -214,6 +213,7 @@ const AllBookingsPage = () => {
         return response.json();
       })
       .then((data) => {
+        fetchBookingDetails(bookingId);
         setUploadedFiles([]);
       })
       .catch((error) => {
