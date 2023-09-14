@@ -11,6 +11,7 @@ import { selectUserData } from "../../store/user/user.selector";
 
 const AllBookingsPage = () => {
   const apiUrl = process.env.REACT_APP_BE_LOGIN_API_URL;
+  const fileUploadApiUrl = process.env.REACT_APP_UPLOAD_FILES_URL;
   const userData = useSelector(selectUserData);
   const [diagnosticBookings, setDiagnosticBookings] = useState([]);
   const [metaData, setMetaData] = useState({});
@@ -166,7 +167,7 @@ const AllBookingsPage = () => {
         });
 
         const response = await axios.post(
-          `${apiUrl}/upload/reports`,
+          `${fileUploadApiUrl}/upload/reports`,
           formData,
           {
             headers: {
@@ -386,9 +387,9 @@ const AllBookingsPage = () => {
                             </span>
                           </h2>
                           <ul>
-                            {uploadedFiles?.map((file) => (
+                            {uploadedFiles?.map((file, index) => (
                               <li key={file.url}>
-                                {file.url}
+                                {index + 1} file uploaded successfully!
                                 <button
                                   onClick={() => handleFileRemoval(file.url)}
                                 >
