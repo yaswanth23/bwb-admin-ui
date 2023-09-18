@@ -11,7 +11,6 @@ import { selectUserData } from "../../store/user/user.selector";
 
 const AllBookingsPage = () => {
   const apiUrl = process.env.REACT_APP_BE_LOGIN_API_URL;
-  const fileUploadApiUrl = process.env.REACT_APP_UPLOAD_FILES_URL;
   const userData = useSelector(selectUserData);
   const [diagnosticBookings, setDiagnosticBookings] = useState([]);
   const [metaData, setMetaData] = useState({});
@@ -167,7 +166,7 @@ const AllBookingsPage = () => {
         });
 
         const response = await axios.post(
-          `${fileUploadApiUrl}/upload/reports`,
+          `${apiUrl}/upload/reports`,
           formData,
           {
             headers: {
