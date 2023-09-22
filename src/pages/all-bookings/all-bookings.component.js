@@ -176,7 +176,6 @@ const AllBookingsPage = () => {
 
         if (response.status === 200) {
           const responseData = response.data;
-          console.log(responseData);
           setUploadedFiles([...uploadedFiles, ...responseData.data]);
           setButtonLabel("submit");
         } else {
