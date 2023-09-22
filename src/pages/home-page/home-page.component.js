@@ -1,14 +1,20 @@
 import { memo } from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../../components/sidebar/sidebar.component";
+import { useSelector } from "react-redux";
+import SidebarOne from "../../components/sidebar/sidebar-one.component";
+import SidebarTwo from "../../components/sidebar/sidebar-two.component";
 import Navbar from "../../components/navbar/navbar.component";
 import "./home-page.styles.css";
 
+import { selectUserData } from "../../store/user/user.selector";
+
 const HomePage = () => {
+  const userData = useSelector(selectUserData);
+
   return (
     <>
       <div className="hp-container">
-        <Sidebar />
+        {userData?.roleId === 103 ? <SidebarTwo /> : <SidebarOne />}
         <div className="hp-content-container">
           <Navbar />
           <Outlet />
