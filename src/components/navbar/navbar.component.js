@@ -15,6 +15,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(changeIsLoggedOutUser());
+    window.location.href = "/";
   };
 
   return (
