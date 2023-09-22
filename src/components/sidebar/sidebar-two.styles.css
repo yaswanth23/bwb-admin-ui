@@ -82,3 +82,10 @@
   color: var(--color-preload-text);
   text-transform: uppercase;
 }
+.sb-nav-link-doctor-icon {
+  font-size: 1.3rem;
+  color: var(--color-preload-text);
+}
+.sb-nav-link-doctor-icon.active {
+  color: var(--primary-color);
+}

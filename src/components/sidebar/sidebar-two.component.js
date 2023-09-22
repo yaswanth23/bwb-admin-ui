@@ -1,5 +1,6 @@
 import { Fragment, memo, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { BsCalendar2CheckFill } from "react-icons/bs";
 import "./sidebar-two.styles.css";
 
 import budget_b from "../../assets/icons/budget-blue.svg";
@@ -56,10 +57,10 @@ const SidebarTwo = () => {
                   2 === activeLinkIdx ? "active" : null
                 }`}
               >
-                <img
-                  src={2 === activeLinkIdx ? budget_b : budget_w}
-                  className="sb-nav-link-icon"
-                  alt="book-diagnostics-icon"
+                <BsCalendar2CheckFill
+                  className={`sb-nav-link-doctor-icon ${
+                    2 === activeLinkIdx ? "active" : null
+                  }`}
                 />
                 <span className="sb-nav-link-text">My Appointments</span>
               </Link>
