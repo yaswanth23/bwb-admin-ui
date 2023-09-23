@@ -130,3 +130,68 @@
 .my-ad-details-section-container-part {
   display: flex;
 }
+.my-ad-add-prescription-btn {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--primary-color);
+}
+.my-ad-add-prescription-icon {
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+.my-a-modal-container {
+  width: 40rem;
+  padding: 1rem;
+}
+.my-a-modal-header-main {
+  display: flex;
+  justify-content: space-between;
+}
+.my-a-modal-cancel-icon {
+  font-size: 1.7rem;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.my-a-modal-first-section {
+  display: grid;
+}
+.my-a-modal-label {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+.my-a-modal-textarea {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-family: var(--main-font);
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  border: 1px solid var(--primary-color);
+}
+.my-a-modal-submit-section {
+  margin-top: 1rem;
+}
+.my-a-modal-submit-btn {
+  border: none;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  font-family: var(--main-font);
+  color: var(--color-preload-text);
+  background: var(--primary-color);
+}
