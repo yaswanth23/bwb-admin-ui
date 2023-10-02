@@ -15,6 +15,7 @@ const AllBookingsPage = lazy(() =>
 const MyAppointmentsPage = lazy(() =>
   import("./pages/my-appointments/my-appointments.component")
 );
+const Dashboard = lazy(() => import("./pages/dashboard/dashboard.component"));
 
 const App = () => {
   const isUserLoggedIn = useSelector(selectIsUserLoggedIn);
@@ -25,10 +26,14 @@ const App = () => {
       <Suspense>
         <Routes>
           <Route path="/" element={isUserLoggedIn ? <Home /> : <LoginPage />}>
-            {userData?.roleId === 103 ? (
-              <Route path="my-appointments" element={<MyAppointmentsPage />} />
-            ) : (
+            {userData?.roleId === 100 && (
+              <Route path="dashboard" element={<Dashboard />} />
+            )}
+            {userData?.roleId === 101 && (
               <Route path="all-bookings" element={<AllBookingsPage />} />
+            )}
+            {userData?.roleId === 103 && (
+              <Route path="my-appointments" element={<MyAppointmentsPage />} />
             )}
           </Route>
         </Routes>
