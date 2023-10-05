@@ -52,11 +52,12 @@ const Dashboard = () => {
             <p>{usersCount.doctorUsersCount}</p>
           </div>
           <div className="dashboard-users-box">
-          <FaRegHandshake className="partner-icon" />
+            <FaRegHandshake className="partner-icon" />
             <h3>Partners</h3>
             <p>{usersCount.partnerUsersCount}</p>
           </div>
         </div>
+        <div className="dashboard-users-list"></div>
       </div>
     </>
   );
