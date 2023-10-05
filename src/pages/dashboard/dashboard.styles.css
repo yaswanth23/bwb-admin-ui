@@ -1,0 +1,40 @@
+.dashboard-container {
+  margin: 3rem;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  background-color: var(--color-white);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.dashboard-total-users-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dashboard-users-box {
+  text-align: center;
+  width: 20rem;
+  padding: 1rem;
+  border: 1px solid var(--color-light-blue);
+  border-radius: 0.2rem;
+}
+.dashboard-users-box h3 {
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+.dashboard-users-box p {
+  font-size: 2rem;
+  color: var(--primary-color);
+  font-weight: 800;
+}
+.doctor-icon {
+  font-size: 3rem;
+  color: #6499e9;
+}
+.medicines-icon {
+  font-size: 3rem;
+  color: #176b87;
+}
+.partner-icon {
+  font-size: 3rem;
+  color: #78d6c6;
+}
