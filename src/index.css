@@ -1,0 +1,62 @@
+@font-face {
+  font-family: spacemono-regular;
+  src: url(../public/SpaceMono-Regular.ttf);
+  font-display: block;
+}
+@font-face {
+  font-family: spacemono-bold;
+  src: url(../public/SpaceMono-Bold.ttf);
+  font-display: block;
+}
+@font-face {
+  font-family: monument-regular;
+  src: url(../public/MonumentExtended-Regular.otf);
+  font-display: block;
+}
+@font-face {
+  font-family: marvinvisions-bold;
+  src: url(../public/MarvinVisions-Bold.otf);
+  font-display: block;
+}
+
+:root {
+  --main-font: "spacemono-regular", sans-serif;
+  --main-font-bold: "spacemono-bold", sans-serif;
+  --sub-font: "monument-regular", sans-serif;
+  --label-font: "marvinvisions-bold", sans-serif;
+  --primary-color: #0b007b;
+  --color-preload-text: #ccd4ff;
+  --secondary-color: #ff9503;
+  --error-color: #e63600;
+  --color-green: #2ec209;
+  --color-black: #2f3138;
+  --color-white: #fbfbfb;
+  --color-grey: #777777;
+  --color-light-blue: #8093ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--main-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#main-container {
+  width: 100%;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
